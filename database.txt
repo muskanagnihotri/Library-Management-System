@@ -1,0 +1,30 @@
+CREATE TABLE books (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    genre VARCHAR(100),
+    isbn VARCHAR(20),
+    quantity INT(11) DEFAULT 0,
+    publication_date DATE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE borrowers (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    address TEXT,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE transactions (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    book_id INT(11) NOT NULL,
+    borrower_id INT(11) NOT NULL,
+    issue_date DATE NOT NULL,
+    return_date DATE,
+    PRIMARY KEY (id),
+    FOREIGN KEY (book_id) REFERENCES books(id),
+    FOREIGN KEY (borrower_id) REFERENCES borrowers(id)
+);
