@@ -15,8 +15,6 @@ mysql = MySQL(app)
 def test_api():
     return jsonify({'message': 'API is working'})
 
-
-# Create a new book
 @app.route('/api/books', methods=['POST'])
 def add_book():
     title = request.json['title']
@@ -57,7 +55,6 @@ def get_books(book_id):
 
     return jsonify({'books': book})
 
-# Update a book by ID
 @app.route('/api/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
     title = request.json['title']
@@ -73,8 +70,6 @@ def update_book(book_id):
     cur.close()
 
     return jsonify({'message': 'Book updated successfully'})
-
-# Delete a book by ID
 @app.route('/api/books/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
     cur = mysql.connection.cursor()
@@ -84,9 +79,6 @@ def delete_book(book_id):
 
     return jsonify({'message': 'Book deleted successfully'})
 
-#  Borrower Management APIs and Authentication Implementation #
-
-# Create a new borrower
 @app.route('/api/borrowers', methods=['POST'])
 def add_borrower():
     name = request.json['name']
@@ -102,7 +94,6 @@ def add_borrower():
 
     return jsonify({'message': 'Borrower added successfully'})
 
-# Retrieve all borrowers
 @app.route('/api/borrowers', methods=['GET'])
 def get_borrowers():
     cur = mysql.connection.cursor()
@@ -123,7 +114,7 @@ def delete_borrower(borrower_id):
     return jsonify({'message': 'Borrower deleted successfully'})
 
 
-# borrow a book
+
 @app.route('/api/transactions',methods=['Post'])
 def borrow_book():
     book_id=request.json['book_id']
@@ -152,8 +143,6 @@ def borrow_book():
         cur.close()
         return jsonify({'message':'Book not available'}),400
     
-
-# return a book
 @app.route('/api/transactions/return',methods=['Post'])
 def return_book():
     transaction_id=request.json['transaction_id']
@@ -171,7 +160,7 @@ def return_book():
         return jsonify({'message':'Transaction not found'})
     
 
-# retrieve all transaction
+
 @app.route('/api/transactions',methods=['GET'])
 def get_transaction():
     cur=mysql.connection.cursor()
@@ -191,9 +180,6 @@ def get_transaction():
         transactions_list.append(transactions_dict)
     return jsonify({'transactions':transactions_list})
     
-#Advanced Search Operations and API Documentation #
-
-# Search books by author, genre, or title
 @app.route('/api/books/search', methods=['GET'])
 def search_books():
     query = request.args.get('q')
